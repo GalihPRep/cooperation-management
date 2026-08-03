@@ -11,4 +11,17 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    server: {
+        host: '127.0.0.1',
+        port: 5175,
+        strictPort: true,
+        hmr: {
+            host: '127.0.0.1',
+            port: 5175,
+        },
+        watch: {
+            usePolling: true,
+            ignored: ['**/vendor/**', '**/node_modules/**'],
+        },
+    },
 });
