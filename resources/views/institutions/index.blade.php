@@ -11,14 +11,14 @@
     </div>
 </div>
 <div class="w-full overflow-x-auto overflow-y-max max-h-[500px] border border-gray-200 rounded-lg"></div>
-<table class="table">
-    <thead>
+<table class="table table-bordered table-striped align-middle mb-0">
+    <thead class="table-light sticky-top" style="z-index: 1;">
         <tr>
-            <th>Nama</th>
-            <th>K/L/PD/badan·hukum/perorangan</th>
-            <th>Anggota BMKG</th>
-            <th>Negara</th>
-            <th>Aksi</th>
+            <th style="min-width: 240px;">Nama</th>
+            <th style="min-width: 120px;">Sektor</th>
+            <th style="min-width: 120px;">Anggota BMKG</th>
+            <th style="min-width: 120px;">Negara</th>
+            <th style="min-width: 120px;">Aksi</th>
         </tr>
     </thead>
     <tbody>
