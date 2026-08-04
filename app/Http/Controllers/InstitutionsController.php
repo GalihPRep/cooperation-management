@@ -21,12 +21,19 @@ class InstitutionsController extends Controller
      * Display a listing of the resource.
      * View used: `./resource/views/institutions/index.blade.php`.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = Institution::with(["sector", "country"]);
+        if ($request->filled('name'))  $query->where('name', 'like', '%' . $request->name . '%');
+        if ($request->filled('bmkg'))  $query->where('bmkg', $request->bmkg);
+        if ($request->filled('sector'))  $query->whereHas('sector', fn($q) => $q->where('name', 'like', '%' . $request->sector . '%'));
+        if ($request->filled('country'))  $query->whereHas('country', fn($q) => $q->where('name', 'like', '%' . $request->country . '%'));
+        $items = $query->orderBy("name", "ASC")
+            ->paginate(12)
+            ->withQueryString();
         return view("institutions.index", [
             "title" => "Institutions",
-            "items" => Institution::orderBy("name")
-                ->paginate(12),
+            "items" => $items
         ]);
     }
 
@@ -39,7 +46,7 @@ class InstitutionsController extends Controller
         return view("institutions.create", [
             "sectors" => Sector::orderBy("name")->get(),
             "countries" => Country::orderBy("name")->get(),
-            ]);
+        ]);
     }
 
     /**
@@ -89,7 +96,7 @@ class InstitutionsController extends Controller
         // 2. Fallback to false/0 if the checkbox was omitted from the request
         // Replace 'is_active' with your actual checkbox input name
         $validatedData['bmkg'] = $request->boolean('bmkg');
-        
+
         Institution::where("id", $id)->update($validatedData);
         return redirect("institutions")->with("success", "We did it!");
     }
