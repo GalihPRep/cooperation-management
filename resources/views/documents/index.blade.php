@@ -126,6 +126,9 @@
 
                             <!-- 14. Aksi -->
                             <td class="text-nowrap text-center">
+                                <a href="{{ route('documents.show', $x->id) }}" class="btn btn-sm btn-primary">
+                                    <i class="bi bi-eye"></i>
+                                </a>
                                 <a href="documents/{{ $x->id }}/edit" class="btn btn-sm btn-primary">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>

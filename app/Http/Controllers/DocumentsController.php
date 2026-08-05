@@ -98,9 +98,10 @@ public function index(Request $request)
 
     /**
      * Show the form for editing a new resource.
-     * Not used yet. We include this only because it's in the default setting.
      */
-    public function show(string $id) {}
+    public function show(Document $document) {
+        return view("documents.show", compact("document"));
+    }
 
     /**
      * Show the form for editing a new resource.
