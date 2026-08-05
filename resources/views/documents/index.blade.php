@@ -19,18 +19,18 @@
                         <!-- Column Titles -->
                         <tr>
                             <th style="min-width: 160px;">Mitra kerjasama</th>
-                            <th style="min-width: 220px;">Judul/maksud dan tujuan</th>
+                            <th style="min-width: 480px;">Judul/maksud dan tujuan</th>
                             <th style="min-width: 160px;">Nomor dokumen</th>
-                            <th style="min-width: 140px;">Jenis dokumen</th>
+                            <th style="min-width: 120px;">Jenis dokumen</th>
                             <th style="min-width: 180px;">Lingkup ruang</th>
-                            <th style="min-width: 130px;">Waktu ttd</th>
-                            <th style="min-width: 130px;">Waktu berakhir</th>
+                            <th style="min-width: 135px;">Waktu TTD</th>
+                            <th style="min-width: 135px;">Waktu berakhir</th>
                             <th style="min-width: 120px;">Status</th>
-                            <th style="min-width: 140px;">PIC</th>
-                            <th style="min-width: 130px;">Bentuk Dokumen</th>
-                            <th style="min-width: 150px;">Keterangan</th>
-                            <th style="min-width: 140px;">OTK</th>
-                            <th style="min-width: 140px;">Rencana perpanjangan</th>
+                            <th style="min-width: 120px;">PIC</th>
+                            <th style="min-width: 120px;">Bentuk</th>
+                            <th style="min-width: 216px;">Keterangan</th>
+                            <th style="min-width: 120px;">OTK</th>
+                            <th style="min-width: 180px;">Rencana perpanjangan</th>
                             <th style="min-width: 120px;" class="text-center">Aksi</th>
                         </tr>
                         <!-- Per-Column Search Inputs -->
@@ -73,7 +73,7 @@
                             </td>
 
                             <!-- 2. Judul -->
-                            <td>{{ strlen($x->title) > 64 ? (substr($x->title, 0, 64) . "…") : $x->title }}</td>
+                            <td>{{ $x->title }}</td>
 
                             <!-- 3. Nomor Dokumen -->
                             <td>

@@ -78,7 +78,7 @@
                             </td>
 
                             <!-- 2. Judul -->
-                            <td>{{ strlen($x->title) > 64 ? (substr($x->title, 0, 64) . "…") : $x->title }}</td>
+                            <td>{{ $x->title }}</td>
 
                             <!-- 6. Waktu Ttd -->
                             <td>{{ $x->signing }}</td>
