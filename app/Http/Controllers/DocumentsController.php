@@ -43,6 +43,8 @@ public function index(Request $request)
     if ($request->filled('number')) $query->where('number', 'like', '%' . $request->number . '%');
     if ($request->filled('scope'))  $query->where('scope', 'like', '%' . $request->scope . '%');
     if ($request->filled('note'))   $query->where('note', 'like', '%' . $request->note . '%');
+    if ($request->filled('signing'))   $query->where('signing', 'like', '%' . $request->signing . '%');
+    if ($request->filled('expiry'))   $query->where('expiry', 'like', '%' . $request->expiry . '%');
 
     // Relationships
     if ($request->filled('category')) {
