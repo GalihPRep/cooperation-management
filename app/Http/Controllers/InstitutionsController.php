@@ -28,12 +28,11 @@ class InstitutionsController extends Controller
         if ($request->filled('bmkg'))  $query->where('bmkg', $request->bmkg);
         if ($request->filled('sector'))  $query->whereHas('sector', fn($q) => $q->where('name', 'like', '%' . $request->sector . '%'));
         if ($request->filled('country'))  $query->whereHas('country', fn($q) => $q->where('name', 'like', '%' . $request->country . '%'));
-        $items = $query->orderBy("name", "ASC")
-            ->paginate(12)
-            ->withQueryString();
         return view("institutions.index", [
             "title" => "Institutions",
-            "items" => $items
+            "items" => $query->orderBy("name", "ASC")
+                ->paginate(12)
+                ->withQueryString()
         ]);
     }
 

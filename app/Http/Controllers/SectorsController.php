@@ -12,10 +12,12 @@ class SectorsController extends Controller {
      * Display a listing of the resource.
      * View used: `./resource/views/sectors/index.blade.php`.
      */
-    public function index() {
+    public function index(Request $request) {
+        $query = Sector::query();
+        if ($request->filled('name'))  $query->where('name', 'like', '%' . $request->name . '%');
         return view("sectors.index", [
             "title" => "Sectors",
-            "items" => Sector::orderBy("name")
+            "items" => $query->orderBy("name")
                 ->paginate(12),
         ]); 
     }

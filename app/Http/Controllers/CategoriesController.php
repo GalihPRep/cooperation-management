@@ -12,10 +12,12 @@ class CategoriesController extends Controller {
      * Display a listing of the resource.
      * View used: `./resource/views/categories/index.blade.php`.
      */
-    public function index() {
+    public function index(Request $request) {
+        $query = Category::query();
+        if ($request->filled('name')) $query->where('name', 'like', '%' . $request->name . '%');
         return view("categories.index", [
             "title" => "Categories",
-            "items" => Category::orderBy("name")
+            "items" => $query->orderBy("name")
                 ->paginate(12),
         ]); 
     }

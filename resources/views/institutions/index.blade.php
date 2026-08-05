@@ -36,7 +36,7 @@
                             </th>
                             <th><input type="text" name="country" value="{{ request('country') }}" class="form-control form-control-sm" placeholder="Find country..."></th>
                             <th class="text-center">
-                                <div class="d-flex justify-content-center gap-1">
+                                <div class="d-flex justify-content-left gap-1">
                                     <button type="submit" class="btn btn-sm btn-primary">
                                         <i class="bi bi-search"></i>
                                     </button>

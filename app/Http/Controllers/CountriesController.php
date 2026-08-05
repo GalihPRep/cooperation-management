@@ -15,11 +15,14 @@ class CountriesController extends Controller {
      * Display a listing of the resource.
      * View used: `./resource/views/countries/index.blade.php`.
      */
-    public function index() {
+    public function index(Request $request) {
+        $query = Country::orderBy("name");
+        if ($request->filled('name')) {
+            $query->where('name', 'like', '%' . $request->name . '%');
+        }
         return view("countries.index", [
             "title" => "Countries",
-            "items" => Country::orderBy("name")
-                ->paginate(12),
+            "items" => $query->paginate(12),
         ]); 
     }
 

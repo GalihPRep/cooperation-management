@@ -15,10 +15,12 @@ class PicsController extends Controller {
      * Display a listing of the resource.
      * View used: `./resource/views/pics/index.blade.php`.
      */
-    public function index() {
+    public function index(Request $request) {
+        $query = Pic::with(["institution"]);
+        if ($request->filled('institution'))  $query->whereHas('institution', fn($q) => $q->where('name', 'like', '%' . $request->institution . '%'));
         return view("pics.index", [
             "title" => "Pics",
-            "items" => Pic::orderBy("name")
+            "items" => $query->orderBy("name")
                 ->paginate(12),
         ]); 
     }
