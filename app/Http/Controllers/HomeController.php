@@ -7,7 +7,7 @@ use App\Models\Document;
 
 class HomeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         // 1. Fetch grouped year counts cleanly using Laravel Collection helpers
         $expiries = Document::selectRaw("
@@ -17,6 +17,19 @@ class HomeController extends Controller
             ->groupByRaw("CASE WHEN expiry IS NULL THEN 'Format tanggal tidak valid' ELSE YEAR(expiry) END")
             ->orderBy("expiry_year")
             ->get();
+
+        $query = Document::with(["institutions", "status"]);
+
+        // Direct text fields
+        if ($request->filled('title'))  $query->where('title', 'like', '%' . $request->title . '%');
+        if ($request->filled('signing'))   $query->where('signing', 'like', '%' . $request->signing . '%');
+        if ($request->filled('expiry'))   $query->where('expiry', 'like', '%' . $request->expiry . '%');
+        if ($request->filled('status')) {
+            $query->whereHas('status', fn($q) => $q->where('name', 'like', '%' . $request->status . '%'));
+        }
+        if ($request->filled('mitra')) {
+            $query->whereHas('institutions', fn($q) => $q->where('name', 'like', '%' . $request->mitra . '%'));
+        }
 
         return view("home", [
             "country" => [
@@ -35,7 +48,11 @@ class HomeController extends Controller
 
             // Collection method ->pluck() replaces the array_map entirely!
             "expiry_year"  => $expiries->pluck('expiry_year'),
-            "expiry_count" => $expiries->pluck('expiry_count')
+            "expiry_count" => $expiries->pluck('expiry_count'),
+
+            "documents" => $query->orderBy("expiry", "DESC")
+                ->paginate(12)
+                ->withQueryString()
         ]);
     }
 }

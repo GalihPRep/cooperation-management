@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get("/", [HomeController::class, "index"]);
+Route::get("/", [HomeController::class, "index"])->name("home.index");
 Route::get("/categories", [CategoriesController::class, "index"])->name("categories.index");
 Route::get("/countries", [CountriesController::class, "index"])->name("countries.index");
 Route::get("/documents", [DocumentsController::class, "index"])->name("documents.index");
