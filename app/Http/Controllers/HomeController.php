@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Document;
 
@@ -54,5 +55,17 @@ class HomeController extends Controller
                 ->paginate(12)
                 ->withQueryString()
         ]);
+    }
+    public function downloadPdf()
+    {
+        // Fetch your table data
+        $items = Document::with(["institutions", "status"])->get();
+
+        // Pass data to the Blade view
+        $pdf = Pdf::loadView('pdf', compact('items'))
+                  ->setPaper('a4', 'landscape'); // Optional configuration
+        
+        // Alternatively, use stream() to view it in the browser:
+        return $pdf->stream();
     }
 }

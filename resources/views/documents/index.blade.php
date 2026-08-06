@@ -23,7 +23,7 @@
                             <th style="min-width: 160px;">Nomor dokumen</th>
                             <th style="min-width: 120px;">Jenis dokumen</th>
                             <th style="min-width: 180px;">Lingkup ruang</th>
-                            <th style="min-width: 135px;">Waktu TTD</th>
+                            <th style="min-width: 135px;">Waktu tandatangan</th>
                             <th style="min-width: 135px;">Waktu berakhir</th>
                             <th style="min-width: 120px;">Status</th>
                             <th style="min-width: 120px;">PIC</th>

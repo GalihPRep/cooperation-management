@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::get("/", [HomeController::class, "index"])->name("home.index");
+Route::get('/pdf', [HomeController::class, 'downloadPdf'])->name('pdf');
 Route::get("/categories", [CategoriesController::class, "index"])->name("categories.index");
 Route::get("/countries", [CountriesController::class, "index"])->name("countries.index");
 Route::get("/documents", [DocumentsController::class, "index"])->name("documents.index");
