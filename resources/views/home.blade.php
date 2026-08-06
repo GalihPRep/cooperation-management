@@ -28,9 +28,19 @@
         </div>
     </div>
 </div>
+<div class="row justify-content-center">
+    <div class="col-sm-1">
+        <div class="row">
+            <a href="{{ route('pdf') }}" class="btn btn-sm btn-secondary">
+                Lihat PDF
+            </a>
+        </div>
+    </div>
+</div>
 <div class="d-flex justify-content-center mt-3">
     {{ $documents->links() }}
 </div>
+
 <div class="card shadow-sm mb-4">
     <div class="card-body p-0">
         <form method="GET" action="{{ route('home.index') }}">
