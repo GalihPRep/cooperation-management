@@ -47,7 +47,7 @@
             <tr>
                 <td>@foreach($x->institutions as $y)
                     @if(!$y->bmkg)
-                    <span class="badge rounded-pill bg-primary me-1 mb-1 d-inline-block">{{ $y->name }}</span>
+                    <div style="background-color: #efefef; padding: 2px 6px; border-radius: 4px; margin: 4px;">{{ $y->name }}</div>
                     @endif
                     @endforeach
                 </td>
