@@ -23,7 +23,8 @@ class Document extends Model
         "status_id",
         "format_id",
         "note",
-        "extension"
+        "extension",
+        "file"
     ];
 
     /** Multiple `document` rows have single `category` row. */

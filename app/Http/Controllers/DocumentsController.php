@@ -155,7 +155,9 @@ public function index(Request $request)
         } else $obj->pics()->detach();
 
         // In `./storage/app/public/uploads` folder.
-        if ($request->hasFile('file')) $request->file('file')->store('uploads', 'public');
+        if ($request->hasFile('file')) $file = $request->file('file')->store('uploads', 'public');
+        $obj->file = $file ?? $obj->file;
+        $obj->save();
 
         return redirect("documents")->with("success", "We did it!");
     }

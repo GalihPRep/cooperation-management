@@ -120,15 +120,12 @@
                     value="{{ old('extension', $item->extension) }}">
                 @error('extension') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
-            @php
-            $path = "uploads/3hsSZ51i0hlcBNE94aKwTH1xxCbkGKDBnCXPH3uv.pdf";
-            @endphp
-            @if(Str::endsWith($path, '.pdf'))
-            <a href="{{ asset('storage/' . $path) }}" target="_blank" class="btn btn-primary">
+            @if(Str::endsWith($item->file, '.pdf'))
+            <a href="{{ asset('storage/' . $item->file) }}" target="_blank" class="btn btn-primary">
                 📄 View PDF Document
             </a>
             @else
-            <img src="{{ asset('storage/' . $path) }}" alt="Uploaded Image">
+            <img src="{{ asset('storage/' . $item->file) }}" alt="Uploaded Image">
             @endif
             <div class="mb-3">
                 <label for="file" class="form-label">Choose File:</label>
