@@ -27,7 +27,8 @@ class DocumentsController extends Controller
         "status_id" => "nullable|exists:statuses,id",
         "format_id" => "nullable|exists:formats,id",
         "note" => "nullable|string",
-        "extension" => "nullable"
+        "extension" => "nullable",
+        'file' => 'required|file|mimes:jpg,png,pdf|max:2048',
     ];
 
     /**
@@ -152,6 +153,10 @@ public function index(Request $request)
             $ids_pic = array_map("intval", explode(',', $str_pic));
             $obj->pics()->sync($ids_pic);
         } else $obj->pics()->detach();
+
+        // In `./storage/app/public/uploads` folder.
+        if ($request->hasFile('file')) $request->file('file')->store('uploads', 'public');
+
         return redirect("documents")->with("success", "We did it!");
     }
 

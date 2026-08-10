@@ -7,7 +7,7 @@
         <div class="mb-3">
             <a href="{{ route('documents.index') }}" class="btn btn-primary">Kembali</a>
         </div>
-        <form action="{{ route('documents.store') }}" method="post">
+        <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="partner" class="control-label">Mitra kerjasama</label>
