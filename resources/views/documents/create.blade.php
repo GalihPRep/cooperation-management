@@ -120,6 +120,10 @@
                 @error('extension') <div class="invalid-feedback">{{ $message }}</div> @enderror
             </div>
             <div class="mb-3">
+                <label for="file" class="form-label">Choose File:</label>
+                <input id="file" name="file" type="file" class="form-control @error('file') is-invalid @enderror" />
+            </div>
+            <div class="mb-3">
                 <input type="submit" value="Simpan" class="btn btn-primary" />
             </div>
         </form>

@@ -35,41 +35,41 @@ class DocumentsController extends Controller
      * Display a listing of the resource.
      * View used: `./resource/views/documents/index.blade.php`.
      */
-public function index(Request $request)
-{
-    $query = Document::with(["institutions", "category", "status", "pics", "format"]);
+    public function index(Request $request)
+    {
+        $query = Document::with(["institutions", "category", "status", "pics", "format"]);
 
-    // Direct text fields
-    if ($request->filled('title'))  $query->where('title', 'like', '%' . $request->title . '%');
-    if ($request->filled('number')) $query->where('number', 'like', '%' . $request->number . '%');
-    if ($request->filled('scope'))  $query->where('scope', 'like', '%' . $request->scope . '%');
-    if ($request->filled('note'))   $query->where('note', 'like', '%' . $request->note . '%');
-    if ($request->filled('signing'))   $query->where('signing', 'like', '%' . $request->signing . '%');
-    if ($request->filled('expiry'))   $query->where('expiry', 'like', '%' . $request->expiry . '%');
+        // Direct text fields
+        if ($request->filled('title'))  $query->where('title', 'like', '%' . $request->title . '%');
+        if ($request->filled('number')) $query->where('number', 'like', '%' . $request->number . '%');
+        if ($request->filled('scope'))  $query->where('scope', 'like', '%' . $request->scope . '%');
+        if ($request->filled('note'))   $query->where('note', 'like', '%' . $request->note . '%');
+        if ($request->filled('signing'))   $query->where('signing', 'like', '%' . $request->signing . '%');
+        if ($request->filled('expiry'))   $query->where('expiry', 'like', '%' . $request->expiry . '%');
 
-    // Relationships
-    if ($request->filled('category')) {
-        $query->whereHas('category', fn($q) => $q->where('name', 'like', '%' . $request->category . '%'));
-    }
-    if ($request->filled('status')) {
-        $query->whereHas('status', fn($q) => $q->where('name', 'like', '%' . $request->status . '%'));
-    }
-    if ($request->filled('format')) {
-        $query->whereHas('format', fn($q) => $q->where('name', 'like', '%' . $request->format . '%'));
-    }
-    if ($request->filled('mitra')) {
-        $query->whereHas('institutions', fn($q) => $q->where('name', 'like', '%' . $request->mitra . '%'));
-    }
-    if ($request->filled('pic')) {
-        $query->whereHas('pics', fn($q) => $q->where('name', 'like', '%' . $request->pic . '%'));
-    }
+        // Relationships
+        if ($request->filled('category')) {
+            $query->whereHas('category', fn($q) => $q->where('name', 'like', '%' . $request->category . '%'));
+        }
+        if ($request->filled('status')) {
+            $query->whereHas('status', fn($q) => $q->where('name', 'like', '%' . $request->status . '%'));
+        }
+        if ($request->filled('format')) {
+            $query->whereHas('format', fn($q) => $q->where('name', 'like', '%' . $request->format . '%'));
+        }
+        if ($request->filled('mitra')) {
+            $query->whereHas('institutions', fn($q) => $q->where('name', 'like', '%' . $request->mitra . '%'));
+        }
+        if ($request->filled('pic')) {
+            $query->whereHas('pics', fn($q) => $q->where('name', 'like', '%' . $request->pic . '%'));
+        }
 
-    $items = $query->orderBy("created_at", "DESC")
-                   ->paginate(12)
-                   ->withQueryString();
+        $items = $query->orderBy("created_at", "DESC")
+            ->paginate(12)
+            ->withQueryString();
 
-    return view("documents.index", compact("items"));
-}
+        return view("documents.index", compact("items"));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -93,14 +93,30 @@ public function index(Request $request)
      */
     public function store(Request $request)
     {
-        CreateDocumentJob::dispatch($request->validate($this->validator));
+        // 1. Store the file first and get the string path.
+        $filePath = null;
+        if ($request->hasFile('file')) {
+            $filePath = $request->file('file')->store('uploads', 'public');
+        }
+
+        // 2. Get the validated array data.
+        $validatedData = $request->validate($this->validator);
+
+        // 3. Overwrite the raw 'file' object with the string path.
+        $validatedData['file'] = $filePath;
+
+        // 4. Dispatch the job safely with plain data strings.
+        CreateDocumentJob::dispatch($validatedData);
+
         return redirect("documents")->with("success", "We did it!");
     }
+
 
     /**
      * Show the form for editing a new resource.
      */
-    public function show(Document $document) {
+    public function show(Document $document)
+    {
         return view("documents.show", compact("document"));
     }
 
