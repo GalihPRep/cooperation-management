@@ -7,7 +7,7 @@
         <div class="mb-3">
             <a href="{{ route('documents.index') }}" class="btn btn-primary">Kembali</a>
         </div>
-        <form action="/documents/{{ $item->id }}" method="post">
+        <form action="{{ route('documents.update', $item->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             @method("put")
             <div class="mb-3">
@@ -119,6 +119,17 @@
                 <input id="extension" name="extension" type="text" class="form-control @error('extension') is-invalid @enderror"
                     value="{{ old('extension', $item->extension) }}">
                 @error('extension') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+            @if(Str::endsWith($item->file, '.pdf'))
+            <a href="{{ asset('storage/' . $item->file) }}" target="_blank" class="btn btn-primary">
+                📄 View PDF Document
+            </a>
+            @else
+            <img src="{{ asset('storage/' . $item->file) }}" alt="Uploaded Image">
+            @endif
+            <div class="mb-3">
+                <label for="file" class="form-label">Choose File:</label>
+                <input id="file" name="file" type="file" class="form-control @error('file') is-invalid @enderror" />
             </div>
             <div class="mb-3">
                 <input type="submit" value="Simpan" class="btn btn-primary" />

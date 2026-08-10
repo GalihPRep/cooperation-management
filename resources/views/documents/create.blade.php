@@ -7,7 +7,7 @@
         <div class="mb-3">
             <a href="{{ route('documents.index') }}" class="btn btn-primary">Kembali</a>
         </div>
-        <form action="{{ route('documents.store') }}" method="post">
+        <form action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="partner" class="control-label">Mitra kerjasama</label>
@@ -118,6 +118,10 @@
                 <input id="extension" name="extension" type="text" class="form-control @error('extension') is-invalid @enderror"
                     value="{{ old('extension') }}">
                 @error('extension') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
+            <div class="mb-3">
+                <label for="file" class="form-label">Choose File:</label>
+                <input id="file" name="file" type="file" class="form-control @error('file') is-invalid @enderror" />
             </div>
             <div class="mb-3">
                 <input type="submit" value="Simpan" class="btn btn-primary" />
